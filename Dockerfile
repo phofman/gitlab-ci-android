@@ -8,7 +8,30 @@ ENV ANDROID_HOME "/android_sdk"
 
 # install required tools
 RUN apt-get --quiet update --yes
-RUN apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1 build-essential ruby ruby-dev libgmp-dev xxd
+RUN apt-get --quiet install apt-utils -y
+RUN apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1 build-essential libgmp-dev xxd
+RUN apt-get --quiet install --yes libssl-dev libreadline-dev zlib1g-dev
+
+# installing Ruby 2.6+ (as the one provided by apt is 2.3)
+# as described: https://github.com/rbenv/rbenv#basic-github-checkout
+RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+RUN cd ~/.rbenv && src/configure && make -C src
+RUN echo 'export PATH="/root/.rbenv/bin:$PATH"' >> ~/.bashrc
+ENV PATH "/root/.rbenv/bin:${PATH}"
+RUN ~/.rbenv/bin/rbenv init; exit 0
+
+# install ruby-build an rbenv plugin
+RUN mkdir -p "$(rbenv root)"/plugins
+RUN git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
+
+# verify rbenv installation
+RUN curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-doctor | bash; eval exit 0
+RUN rbenv install -l
+RUN rbenv install '2.6.5'
+ENV PATH "/root/.rbenv/versions/2.6.5/bin:${PATH}"
+RUN gem env home
+RUN ruby -v
+RUN which ruby
 
 # install Android SDK
 RUN wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip && \
