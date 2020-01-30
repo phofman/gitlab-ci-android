@@ -3,7 +3,7 @@ LABEL maintainer="CodeTitans"
 
 # setup environment variables
 ENV ANDROID_COMPILE_SDK "29"
-ENV ANDROID_BUILD_TOOLS "29.0.2"
+ENV ANDROID_BUILD_TOOLS "29.0.3"
 ENV ANDROID_HOME "/android_sdk"
 
 # install required tools
