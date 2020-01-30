@@ -51,6 +51,7 @@ RUN sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}" > /dev/null
 RUN sdkmanager "extras;android;m2repository" > /dev/null
 RUN sdkmanager "extras;google;m2repository" > /dev/null
 RUN sdkmanager "extras;google;google_play_services" > /dev/null
+RUN sdkmanager "cmake;3.10.2.4988404" > /dev/null
 
 # install fastline
 RUN ruby -v
