@@ -12,6 +12,11 @@ RUN apt-get --quiet install apt-utils -y
 RUN apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1 build-essential libgmp-dev xxd
 RUN apt-get --quiet install --yes libssl-dev libreadline-dev zlib1g-dev
 
+# GiT LFS
+RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+RUN apt-get --quiet install --yes git-lfs
+RUN git lfs install
+
 # installing Ruby 2.6+ (as the one provided by apt is 2.3)
 # as described: https://github.com/rbenv/rbenv#basic-github-checkout
 RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv
